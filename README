@@ -32,3 +32,6 @@ Credits
 -------
 Based on Aurélien APTEL <aurelien dot aptel at gmail dot com> bt source code.
 
+stu
+---
+This is a fork of st's current git version with the scrolling patches applied + an adaptation of dcat's Xresources support patch
