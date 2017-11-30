@@ -7,6 +7,8 @@
 #include <time.h>
 #include <unistd.h>
 #include <libgen.h>
+
+/* X11 */
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -832,8 +834,10 @@ xloadfonts(char *fontstr, double fontsize)
 	if (xloadfont(&dc.ifont, pattern))
 		die("st: can't open font %s\n", fontstr);
 
-	FcPatternDel(pattern, FC_WEIGHT);
-	FcPatternAddInteger(pattern, FC_WEIGHT, FC_WEIGHT_BOLD);
+	if (bold_font) {
+	        FcPatternDel(pattern, FC_WEIGHT);
+	        FcPatternAddInteger(pattern, FC_WEIGHT, FC_WEIGHT_BOLD);
+	}
 	if (xloadfont(&dc.ibfont, pattern))
 		die("st: can't open font %s\n", fontstr);
 
@@ -1701,6 +1705,28 @@ run(void)
 	}
 }
 
+void
+reload(int sig)
+{
+        xrdb_load();
+        
+        /* colors, fonts */
+        xloadcols();
+        xunloadfonts();
+        xloadfonts(font, 0);
+        
+        /* pretend the window just got resized */
+        cresize(win.w, win.h);
+        ttyresize();
+        
+        redraw();
+        
+        /* triggers re-render if we're visible. */
+        ttywrite("\033[O", 3);
+        
+        signal(SIGUSR1, reload);
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -1761,6 +1787,8 @@ run:
 	}
 	setlocale(LC_CTYPE, "");
 	XSetLocaleModifiers("");
+	xrdb_load();
+        signal(SIGUSR1, reload);
 	tnew(MAX(cols, 1), MAX(rows, 1));
 	xinit();
 	selinit();
