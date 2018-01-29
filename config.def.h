@@ -6,7 +6,8 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 
-char *font = "Liberation Mono:pixelsize=16:antialias=true:autohint=true";
+char *font = "Inconsolata\\-g:size=14:antialias=true:autohint=true";
+//char *font = "Liberation Mono:pixelsize=16:antialias=true:autohint=true";
 //char font[] = "Liberation Mono:pixelsize=16:antialias=true:autohint=true";
 int bold_font = 0;
 int borderpx = 2;
@@ -68,6 +69,7 @@ static int bellvolume = 0;
 
 /* default TERM value */
 char *termname = "st-256color";
+//char *termname = "xterm-256color";
 //char termname[] = "st-256color";
 
 /*
