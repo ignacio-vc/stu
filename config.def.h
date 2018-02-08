@@ -6,7 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 
-char *font = "Inconsolata\\-g:size=14:antialias=true:autohint=true";
+char *font = "Inconsolata_g:size=14:antialias=true:autohint=true";
 //char *font = "Liberation Mono:pixelsize=16:antialias=true:autohint=true";
 //char font[] = "Liberation Mono:pixelsize=16:antialias=true:autohint=true";
 int bold_font = 0;
